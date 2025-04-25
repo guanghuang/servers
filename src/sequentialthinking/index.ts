@@ -267,6 +267,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 });
 
 async function runServer() {
+  if ((await import('./sse-setup.js')).setupSSE(server)) {
+    return;
+  }
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error("Sequential Thinking MCP Server running on stdio");

@@ -635,6 +635,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 // Start server
 async function runServer() {
+  if ((await import('./sse-setup.js')).setupSSE(server)) {
+    return;
+  }
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error("Secure MCP Filesystem Server running on stdio");
